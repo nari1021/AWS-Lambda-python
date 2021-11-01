@@ -10,7 +10,7 @@
 
 4. If you want to use different tag name, you might change tag name in each file.
 
-</br><hr/></br>
+</br>
 
 # 이 폴더의 사용법
 
