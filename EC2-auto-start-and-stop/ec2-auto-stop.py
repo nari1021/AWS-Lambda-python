@@ -35,11 +35,10 @@ def turnOff():
         try:
             # RunningInstances 변수에 담긴 인스턴스들을 중지
             ec2.instances.stop(InstanceIds=[instance])
-            print('Start Instances ID :: ' + str(instance))
+            print('Stop Instances ID :: ' + str(instance))
         except botocore.exceptions.ClientError as error:
             logger.error(error)
             return error
         pass
     
     return 'success'
-    
