@@ -1,9 +1,16 @@
+import os
 import boto3
 import botocore
 import json
+import logging
 
 region = 'ap-northeast-2'
 ec2 = boto3.resource('ec2', region_name=region)
+
+# set logging for INFO
+logging.basicConfig()
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 def lambda_handler(event, context):
     if turnOn() == 'success':
