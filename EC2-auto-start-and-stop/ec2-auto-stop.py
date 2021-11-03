@@ -24,8 +24,13 @@ def lambda_handler(event, context):
 def turn_off():
     instances = ec2.instances.filter(
         Filters=[{
+            # AutoStartStop 태그 값이 true 인 인스턴스 찾음
             'Name': 'tag:AutoStartStop',
             'Values': ['true']
+        },
+        {   # 실행 상태인 인스턴스 찾음
+            'Name': 'instance-state-name',
+            'Values': ['running'],
         }]
     )
     

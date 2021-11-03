@@ -8,7 +8,7 @@ ec2 = boto3.resource('ec2')
 
 # set logging for INFO
 logging.basicConfig(
-    format = '[%(levelname)s] %(message)s',
+    format = '[%(levelname)s]   %(message)s',
     force=True
 )
 logger = logging.getLogger()
@@ -24,8 +24,13 @@ def lambda_handler(event, context):
 def turn_on():
     instances = ec2.instances.filter(
         Filters=[{
+            # AutoStartStop 태그 값이 true 인 인스턴스 찾음
             'Name': 'tag:AutoStartStop',
-            'Values': ['true'],
+            'Values': ['true']
+        },
+        {   # 중지 상태인 인스턴스 찾음
+            'Name': 'instance-state-name',
+            'Values': ['stopped'],
         }]
     )
     
