@@ -15,13 +15,13 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 def lambda_handler(event, context):
-    turn_on()
+    turn_off()
     return {
         'statusCode': 200,
         'body': "SUCCESS"
     }
     
-def turn_on():
+def turn_off():
     instances = ec2.instances.filter(
         Filters=[{
             'Name': 'tag:AutoStartStop',
