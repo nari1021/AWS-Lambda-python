@@ -11,7 +11,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 def lambda_handler(event, context):
-    # event 분기
+    # event
     currnt_event = get_event_type(event)
     
     err_msg = "ACTION is invalidated!! Check your lambda Environment Values ..."
@@ -32,18 +32,21 @@ def lambda_handler(event, context):
     stop_result = action_result.get("StoppingInstances", None)
 
     if not start_result is None:
+        logger.info(start_result)
         return {
             'statusCode': 200,
             'body': 'SUCCESS',
             'state': start_result
         }
     elif not stop_result is None:
+        logger.info(stop_result)
         return {
             'statusCode': 200,
             'body': 'SUCCESS',
             'state': stop_result
         }
     else:
+        logger.error(err_msg)
         return {
             'statusCode': 500,
             'body': 'Fail',
@@ -57,7 +60,6 @@ def get_event_type(event) -> dict:
         return 'stop'
 
 def get_instances(client: client) -> set:
-    # print(type(client))
     find_instances = client.describe_instances(
         Filters=[
             {
