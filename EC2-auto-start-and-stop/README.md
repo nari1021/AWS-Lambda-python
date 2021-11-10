@@ -21,6 +21,8 @@
 
 # 이 폴더의 사용법
 
+> Lambda 하나의 함수로 EC2 start/stop 을 관리하고 싶다면 [final-ec2-auto-start-stop.py](https://github.com/nari1021/AWS-Lambda-python/blob/main/EC2-auto-start-and-stop/final-ec2-auto-start-and-stop.py) 파일을 사용하시면 됩니다.
+
 1. AWS 콘솔에 자신의 계정으로 로그인을 합니다.
 
 2. `aws-lambda-ec2-policy.json` 파일을 이용하여 IAM Policy를 생성합니다.
