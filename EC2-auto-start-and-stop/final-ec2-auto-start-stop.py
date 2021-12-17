@@ -28,17 +28,17 @@ def lambda_handler(event, context):
     target_instances = get_instances(client)
     action_result = get_action_result(client, target_instances, currnt_event)
 
-    start_result = action_result.get("StartingInstances", None)
-    stop_result = action_result.get("StoppingInstances", None)
+    start_result = action_result.get("StartingInstances")
+    stop_result = action_result.get("StoppingInstances")
 
-    if not start_result is None:
+    if start_result:
         logger.info(start_result)
         return {
             'statusCode': 200,
             'body': 'SUCCESS',
             'state': start_result
         }
-    elif not stop_result is None:
+    elif stop_result:
         logger.info(stop_result)
         return {
             'statusCode': 200,
@@ -54,7 +54,7 @@ def lambda_handler(event, context):
         }
 
 def get_event_type(event) -> dict:
-    if 'start' in list(event.get("resources", None))[0]:
+    if 'start' in list(event.get("resources"))[0]:
         return 'start'
     else:
         return 'stop'
@@ -74,7 +74,4 @@ def get_action_result(client: client, instances: list, action_type: str) -> dict
     instance_ids = [i.get("InstanceId") for x in instances for i in x]
     if action_type == "start":
         return client.start_instances(InstanceIds=instance_ids)
-    elif action_type == "stop":
-        return client.stop_instances(InstanceIds=instance_ids)
-    else:
-        return {}
+    return client.stop_instances(InstanceIds=instance_ids)
