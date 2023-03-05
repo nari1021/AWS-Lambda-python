@@ -8,6 +8,7 @@ client = boto3.client('cloudwatch')
 end_time = datetime.utcnow()
 start_time = end_time - timedelta(minutes=5)
 
+
 def lambda_handler(event, context):
     response = client.get_metric_data(
         MetricDataQueries=[
@@ -32,18 +33,20 @@ def lambda_handler(event, context):
         ],
         StartTime=start_time,
         EndTime=end_time,
-        ScanBy='TimestampAscending', #'TimestampDescending' |'TimestampAscending'
+        ScanBy='TimestampAscending',  # 'TimestampDescending' |'TimestampAscending'
         MaxDatapoints=100800,
         LabelOptions={
             'Timezone': '+0900'
         }
     )
-    
+
     print(response)
-    
-    health_status_metric_values = (response["MetricDataResults"])[0].get("Values")
-    print("Result :: ", sum(health_status_metric_values) // len(health_status_metric_values))
-    
+
+    health_status_metric_values = (response["MetricDataResults"])[
+        0].get("Values")
+    print("Result :: ", sum(health_status_metric_values) //
+          len(health_status_metric_values))
+
     return {
         'statusCode': 200
     }
